@@ -6,6 +6,18 @@ const invokeAction = async ({ action, id, ...data }) => {
     case 'getAll':
       const movies = await getMovies();
       return console.log(movies);
+    case 'getById':
+      const oneMovie = await getMovieById(id);
+      return console.log(oneMovie);
+    case 'add':
+      const newMovie = await addMovie(data);
+      return console.log(newMovie);
+    case 'updateById':
+      const updateMovie = await updateById(id, data);
+      return console.log(updateMovie);
+    case 'deleteById':
+      const deleteMovie = await deleteById(id);
+      return console.log(deleteMovie);
     default:
       console.log('unknown action');
   }
