@@ -8,3 +8,12 @@ export const getProducts = async (req, res, next) => {
     next(error);
   }
 };
+
+export const addProduct = async (req, res, next) => {
+  try {
+    const product = await services.addProduct(req.body);
+    res.status(201).json(product);
+  } catch (error) {
+    next(error);
+  }
+};
