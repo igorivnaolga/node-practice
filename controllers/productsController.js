@@ -49,13 +49,13 @@ export const updateProductDiscount = async (req, res, next) => {
   try {
     const product = await services.updateProductDiscount(
       req.params.id,
-      req.body
+      req.body.discount
     );
 
     if (!product) {
       throw HttpError(404, 'Not found');
     }
-    res.status(200).json(products);
+    res.status(200).json(product);
   } catch (error) {
     next(error);
   }
