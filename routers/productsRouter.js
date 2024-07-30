@@ -6,5 +6,6 @@ productsRouter.get('/', controllers.getProducts);
 productsRouter.post('/', controllers.addProduct);
 productsRouter.delete('/:id', controllers.deleteProduct);
 productsRouter.patch('/:id', controllers.updateProduct);
+productsRouter.patch('/:id/discount', controllers.updateProductDiscount);
 
 export default productsRouter;

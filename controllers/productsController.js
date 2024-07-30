@@ -44,3 +44,19 @@ export const updateProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateProductDiscount = async (req, res, next) => {
+  try {
+    const product = await services.updateProductDiscount(
+      req.params.id,
+      req.body
+    );
+
+    if (!product) {
+      throw HttpError(404, 'Not found');
+    }
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
