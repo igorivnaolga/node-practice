@@ -23,10 +23,23 @@ export const deleteProduct = async (req, res, next) => {
   try {
     const product = await services.deleteProductById(req.params.id);
     if (!product) {
-      throw HttpError(400, 'Not found');
+      throw HttpError(404, 'Not found');
     }
 
     res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProduct = async (req, res, next) => {
+  try {
+    const product = await services.updateById(req.params.id, req.body);
+
+    if (!product) {
+      throw HttpError(404, 'Not found');
+    }
+    res.status(200).json(product);
   } catch (error) {
     next(error);
   }
