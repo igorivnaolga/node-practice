@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import Product from '../db/models/Product.js';
 
 const productsPath = path.resolve('db', 'products.json');
 
