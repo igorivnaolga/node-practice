@@ -3,12 +3,13 @@ import cors from 'cors';
 import morgan from 'morgan';
 import productsRouter from './routers/productsRouter.js';
 import sequelize from './db/sequelize.js';
+import authRouter from './routers/authRouter.js';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
-// app.use('/api/auth', authRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/products', productsRouter);
 
 app.use((_, res) => {
