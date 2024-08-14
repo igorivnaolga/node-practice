@@ -9,6 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
+app.use(express.static('public'));
+
 app.use('/api/auth', authRouter);
 app.use('/api/products', productsRouter);
 

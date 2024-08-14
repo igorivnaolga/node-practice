@@ -14,6 +14,9 @@ const Product = sequelize.define('product', {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
+  poster: {
+    type: DataTypes.STRING,
+  },
 });
 
 // Product.sync();
