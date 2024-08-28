@@ -1,32 +1,28 @@
 import multer from 'multer';
 import path from 'node:path';
-import HttpError from '../helpers/httpError.js';
-const destination = path.resolve('temp');
+import generator from 'generate-password';
+
+const tempDirPath = path.resolve('temp');
 
 const storage = multer.diskStorage({
-  destination,
-  filename: (req, file, callback) => {
-    const uniquePrefix = `${Date.now()}_${Math.round(Math.random() * 1e9)}`;
-    const filename = `${uniquePrefix}_${file.originalname}`;
-    callback(null, filename);
+  destination: (req, file, cb) => {
+    cb(null, tempDirPath);
+  },
+  filename: (req, file, cb) => {
+    // const hash = Date.now();
+
+    const hash = generator.generate({
+      length: 4,
+      numbers: true,
+    });
+    const newFilename = req.params.id + '_' + hash + '_' + file.originalname;
+    cb(null, newFilename);
+  },
+  limits: {
+    fileSize: 1048576,
   },
 });
 
-const limits = {
-  fileSize: 1024 * 1024 * 5,
-};
-
-const fileFilter = (req, file, callback) => {
-  const extension = file.originalname.split('.').pop();
-  if (extension === 'exe') {
-    return callback(HttpError(400, '.exe not allow extension'));
-  }
-  callback(null, true);
-};
-
-const upload = multer({
-  storage,
-  limits,
-  fileFilter,
+export const upload = multer({
+  storage: storage,
 });
-export default upload;

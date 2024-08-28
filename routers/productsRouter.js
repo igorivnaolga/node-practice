@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/productsController.js';
 import { validateDiscount } from '../middlewares/validateProducts.js';
-import upload from '../middlewares/upload.js';
+import { upload } from '../middlewares/upload.js';
 
 const productsRouter = Router();
 productsRouter.get('/', controllers.getProducts);
@@ -19,6 +19,11 @@ productsRouter.patch(
   '/:id/discount',
   validateDiscount,
   controllers.updateProductDiscount
+);
+productsRouter.patch(
+  '/:id/images',
+  upload.array('images', 4),
+  controllers.updateProductImages
 );
 
 export default productsRouter;

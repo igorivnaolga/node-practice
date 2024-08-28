@@ -68,3 +68,25 @@ export const updateProductDiscount = async (req, res, next) => {
     next(error);
   }
 };
+
+const getProductImagesPath = (filename) =>
+  path.resolve('public', 'products', filename);
+export const updateProductImages = async (req, res, next) => {
+  try {
+    const promisesArray = req.files.map(async (file) => {
+      const oldPath = file.path;
+      const newPath = getProductImagesPath(file.filename);
+      await fs.rename(oldPath, newPath);
+      return path.join('products', file.filename);
+    });
+    const result = await Promise.allSettled(promisesArray);
+    const data = result.map(({ value }) => value);
+    console.log(data);
+    const productImages = await services.updateById(req.params.id, {
+      images: data,
+    });
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+};
